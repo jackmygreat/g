@@ -524,23 +524,6 @@ initiate() {
     echo "For more information, see: https://github.com/stefanmaric/g"
     echo
 
-    if [ "$NON_INTERACTIVE" = false ]; then
-      printf "Do you want to install the latest go version? [y/N] "
-      read_user_input yes_go
-
-      echo
-
-      if [ "$yes_go" != "y" ]; then
-        exit 0
-      fi
-    fi
-
-    echo
-
-    export GOROOT
-    export GOPATH
-    export PATH="$GOPATH/bin:$PATH"
-    exec "$G/bin/g" install latest
   fi
 }
 
