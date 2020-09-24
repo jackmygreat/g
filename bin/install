@@ -273,6 +273,8 @@ install_g() {
   chmod +x "$G/bin/g"
   log_info "info" "creating dir $GOPATH/bin"
   mkdir -p "$GOPATH/bin"
+  log_info "info" "creating dir $GOROOT"
+  mkdir -p "$GOROOT"
 }
 
 #

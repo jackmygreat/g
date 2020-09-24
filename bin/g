@@ -631,9 +631,9 @@ download_version() {
 
   url=$(get_tarball_url "$version")
 
-  if ! is_url_ok "$url"; then
-    error_and_abort "invalid version $version"
-  fi
+#  if ! is_url_ok "$url"; then
+#    error_and_abort "invalid version $version"
+#  fi
 
   log_info "location" "$dir"
 
