@@ -587,11 +587,12 @@ set_version() {
 
   if [ "$version" != "$active" ]; then
     if [ ! -e "$dir/g.lock" ]; then
-      for file in "$dir/"*; do
-        rm -rf "${GOROOT:?}/$(basename "$file")"
-        cp -Rf "$file" "$GOROOT/$(basename "$file")"
-      done
-
+#      for file in "$dir/"*; do
+#        rm -rf "${GOROOT:?}/$(basename "$file")"
+#        cp -Rf "$file" "$GOROOT/$(basename "$file")"
+#      done
+      rm -rf "$dir"
+      ln -s  "$dir" "$GOROOT"
       ln -sf "$GOROOT/bin/"* "$GOPATH/bin/"
     else
       error_and_abort "version $version installation might be corrupted"
