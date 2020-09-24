@@ -511,7 +511,7 @@ initiate() {
   echo
 
   if [ "$IS_UPGRADING" = true ]; then
-    new_version=$(command "$GOPATH/bin/g" --version)
+    new_version=$(command "$G/bin/g" --version)
 
     if [ "$CURRENT_VERSION" = "$new_version" ]; then
       echo "g is already up-to-date"

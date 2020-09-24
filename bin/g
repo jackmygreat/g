@@ -749,11 +749,11 @@ run_with_version() {
 }
 
 self_upgrade() {
-  if [ ! -x "$GOPATH/bin/g" ]; then
+  if [ ! -x "$G/bin/g" ]; then
     error_and_abort "The self-upgrade command can only be used if g was installed using g-install"
   fi
 
-  if [ "$0" = "$GOPATH/bin/g" ]; then
+  if [ "$0" = "$G/bin/g" ]; then
     tmp_dir=${TMPDIR:-"/tmp"}/g-update.$$
     tmp_file=$tmp_dir/g
     (umask 077 && mkdir "$tmp_dir") || error_and_abort "couldn't create temp dir $tmp_dir"
@@ -763,9 +763,9 @@ self_upgrade() {
   fi
 
   if command -v curl > /dev/null; then
-    curl -sSL https://git.io/g-install | sh -s -- -y
+    curl -sSL https://git.io/myginstall_sh | sh -s -- -y
   elif command -v wget > /dev/null; then
-    wget -qO- https://git.io/g-install | sh -s -- -y
+    wget -qO- https://git.io/myginstall_sh | sh -s -- -y
   else
     error_and_abort "curl or wget required"
   fi
