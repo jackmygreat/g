@@ -241,7 +241,8 @@ get_dotfile_for_shell() {
 get_line_for_shell() {
   case "$1" in
     ash | dash | bash | zsh | csh | tcsh)
-      printf '\n%s %s %s %s' \
+      printf '\n%s %s %s %s %s' \
+        "export G=\"$(pretty_print_path "$G")\";" \
         "export GOPATH=\"$(pretty_print_path "$GOPATH")\";" \
         "export GOROOT=\"$(pretty_print_path "$GOROOT")\";" \
         "export PATH=\"$G/bin:\$GOPATH/bin:\$PATH\";" \
@@ -537,7 +538,7 @@ initiate() {
     export GOROOT
     export GOPATH
     export PATH="$GOPATH/bin:$PATH"
-    exec "$GOPATH/bin/g" install latest
+    exec "$G/bin/g" install latest
   fi
 }
 
