@@ -43,13 +43,13 @@ Not strictly necessary, but highly recommended, to completely remove any previou
 That said, you can install `g` with a single command:
 
 ```shell
-curl -sSL https://git.io/g-install | sh -s
+curl -sSL https://git.io/myginstall_sh | sh -s
 ```
 
 If you use `wget` instead:
 
 ```shell
-wget -qO- https://git.io/g-install | sh -s
+wget -qO- https://git.io/myginstall_sh | sh -s
 ```
 
 That will download the [`g` script](./bin/g), put it inside `$GOPATH/bin/`, give it execution rights with `chmod`, and configure your default shell's initialization file, setting the `GOPATH` & `GOROOT` environment variables and adding `$GOPATH/bin` to the `PATH`.
@@ -81,19 +81,19 @@ echo $SHELL
 If you wish to configure a diff shell, you might pass it as arguments:
 
 ```shell
-curl -sSL https://git.io/g-install | sh -s -- fish
+curl -sSL https://git.io/myginstall_sh | sh -s -- fish
 ```
 
 You might as well configure several shells, but that's usually not required:
 
 ```
-curl -sSL https://git.io/g-install | sh -s -- fish bash zsh
+curl -sSL https://git.io/myginstall_sh | sh -s -- fish bash zsh
 ```
 
 Use the `-y` option to skip the prompts and assume "yes" for everything:
 
 ```shell
-curl -sSL https://git.io/g-install | sh -s -- -y
+curl -sSL https://git.io/myginstall_sh | sh -s -- -y
 ```
 
 ### Changing defaults
@@ -112,7 +112,7 @@ You might set those variables before running the install script. For example, in
 ```shell
 export GOROOT=~/.local/share/golang
 export GOPATH=~/MyProjects/go-projects
-curl -sSL https://git.io/g-install | sh -s
+curl -sSL https://git.io/myginstall_sh | sh -s
 ```
 
 In fish:
@@ -120,7 +120,7 @@ In fish:
 ```shell
 set -gx GOROOT ~/.local/share/golang
 set -gx GOPATH ~/MyProjects/go-projects
-curl -sSL https://git.io/g-install | sh -s
+curl -sSL https://git.io/myginstall_sh | sh -s
 ```
 
 ## Manual Installation
@@ -219,7 +219,7 @@ Then open your shell config file with your text editor of choice and look of for
 # tcsh
 ~/.tcshrc
 
-# For ash for dash, check your $ENV var
+# For ash for dmyginstall_shash, check your $ENV var
 echo $ENV
 ```
 
