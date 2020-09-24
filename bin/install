@@ -53,9 +53,9 @@ log_info() {
 #
 # Pre-check environment variables.
 #
-
-GOPATH=${GOPATH:-$HOME/go}
-GOROOT=${GOROOT:-$HOME/.go}
+G=${G:-$HOME/.g}
+GOPATH=${GOPATH:-$G/go_path}
+GOROOT=${GOROOT:-$G/go_root}
 
 if [ "$(echo "$GOPATH" | cut -c1)" != "/" ]; then
   error_and_abort "\$GOPATH must be an absolute path but it is set to $GOPATH"
@@ -68,9 +68,9 @@ fi
 IS_UPGRADING=false
 CURRENT_VERSION=
 
-if [ -x "$GOPATH/bin/g" ] && command "$GOPATH/bin/g" --version > /dev/null 2>&1; then
+if [ -x "$G/bin/g" ] && command "$G/bin/g" --version > /dev/null 2>&1; then
   IS_UPGRADING=true
-  CURRENT_VERSION=$(command "$GOPATH/bin/g" --version)
+  CURRENT_VERSION=$(command "$G/bin/g" --version)
 fi
 
 HAS_GO_ALREADY=false
@@ -244,7 +244,7 @@ get_line_for_shell() {
       printf '\n%s %s %s %s' \
         "export GOPATH=\"$(pretty_print_path "$GOPATH")\";" \
         "export GOROOT=\"$(pretty_print_path "$GOROOT")\";" \
-        "export PATH=\"\$GOPATH/bin:\$PATH\";" \
+        "export PATH=\"$G/bin:\$GOPATH/bin:\$PATH\";" \
         "# $COMMENT_MESSAGE"
       ;;
     fish)
@@ -262,12 +262,16 @@ get_line_for_shell() {
 #
 
 install_g() {
+  log_info "info" "creating dir $G"
+  mkdir -p "$G"
+  log_info "info" "creating dir $G/bin"
+  mkdir -p "$G/bin"
+  log_info "info" "copying g in $G/bin/g"
+  download "$G_DOWNLOAD_URL" > "$G/bin/g"
+  log_info "info" "setting permissions"
+  chmod +x "$G/bin/g"
   log_info "info" "creating dir $GOPATH/bin"
   mkdir -p "$GOPATH/bin"
-  log_info "info" "copying g in $GOPATH/bin/g"
-  download "$G_DOWNLOAD_URL" > "$GOPATH/bin/g"
-  log_info "info" "setting permissions"
-  chmod +x "$GOPATH/bin/g"
 }
 
 #
@@ -415,7 +419,7 @@ configure_selected_shells() {
 
 set_g_alias() {
   if [ "$G_ALIAS_CHANGED" = true ]; then
-    alias_line="alias $G_ALIAS=\"\$GOPATH/bin/g\"; # $COMMENT_MESSAGE"
+    alias_line="alias $G_ALIAS=\"\$G/bin/g\"; # $COMMENT_MESSAGE"
     echo "$alias_line" >> "$1"
   fi
 }
@@ -441,12 +445,13 @@ initiate() {
   fi
 
   echo
-  echo "    $GOPATH/bin/g"
+  echo "    $G/bin/g"
   echo
 
   if [ "$IS_UPGRADING" = false ]; then
     echo "The following environment variables:"
     echo
+    log_info "\$G" "$G"
     log_info "\$GOROOT" "$GOROOT"
     log_info "\$GOPATH" "$GOPATH"
     log_info "\$PATH" "$GOPATH/bin"
